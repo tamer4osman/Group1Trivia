@@ -1,10 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import questions from "../data/questions";
 import Question from "./Question";
+import axios from 'axios'
 
 const Quiz = () => {
   const [userAnswers, setUserAnswers] = useState({});
   const [completed, setCompleted] = useState(false);
+  
+  // API TEST FROM ECA 
+  // --------------------
+  // const [questions, setQuestions] = useState([]);
+  
+  // useEffect(()=>{
+    //   getQuestions()
+    // },[])
+    
+    // const getQuestions = () => {
+      //   axios.get('https://wd40-trivia.onrender.com/api/questions')
+      //   .then(res=>{
+        //     console.log(res.data)
+        //     setQuestions(res.data)
+        //   })
+        //   .catch(error=> console.log(error))
+        // }
+// --------------------
 
   const handleAnswerSelect = (questionId, selectedAnswer) => {
     setUserAnswers((prevAnswers) => ({
