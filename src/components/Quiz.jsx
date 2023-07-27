@@ -1,38 +1,41 @@
 import React, { useState, useEffect, useRef } from "react";
-import questions from "../data/questions";
+/* import questions from "../data/questions"; */
 import Question from "./Question";
-import axios from 'axios'
-import music from "/music.mp3"
-import soundIcon from '/sound.png'
+import axios from "axios";
+import music from "/music.mp3";
+import soundIcon from "/sound.png";
 import { Fade } from "react-awesome-reveal";
 import { Bounce } from "react-awesome-reveal";
-
-
-
 
 const Quiz = () => {
   const [userAnswers, setUserAnswers] = useState({});
   const [completed, setCompleted] = useState(false);
   const [playing, setPlaying] = useState(false);
-  
-  // API TEST FROM ECA 
-  // --------------------
-  // const [questions, setQuestions] = useState([]);
-  
-  // useEffect(()=>{
-    //   getQuestions()
-    // },[])
-    
-    // const getQuestions = () => {
-      //   axios.get('https://wd40-trivia.onrender.com/api/questions')
-      //   .then(res=>{
-        //     console.log(res.data)
-        //     setQuestions(res.data)
-        //   })
-        //   .catch(error=> console.log(error))
-        // }
-// --------------------
 
+  // API TEST FROM ECA
+  // --------------------
+  const [questions, setQuestions] = useState([]);
+
+  useEffect(() => {
+    getQuestions();
+  }, []);
+
+  const getQuestions = () => {
+    axios
+      .get("https://wd40-trivia.onrender.com/api/questions")
+      .then((res) => {
+        console.log(res.data);
+        setQuestions(res.data);
+      })
+      .catch((error) => console.log(error));
+  };
+  // --------------------
+
+  const areAllQuestionsAnswered = () => {
+    return questions.every((question) => userAnswers[question.id]);     
+  };
+
+  
   // const backgroundMusic = new Audio(music);
   const audioRef = useRef(new Audio(music));
 
@@ -45,7 +48,6 @@ const Quiz = () => {
     setPlaying(false);
     audioRef.current.pause();
   };
-
 
   const handleAnswerSelect = (questionId, selectedAnswer) => {
     setUserAnswers((prevAnswers) => ({
@@ -64,9 +66,14 @@ const Quiz = () => {
     return score;
   };
 
+
   const handleFinishQuiz = () => {
-    setCompleted(true);
-    document.getElementById("quizApp").scrollIntoView();
+    if (areAllQuestionsAnswered()) {
+      setCompleted(true);
+      document.getElementById("quizApp").scrollIntoView();
+    } else {
+      alert("Please answer all questions before finishing the quiz.");
+    }
   };
 
   const handleRestartQuiz = () => {
@@ -75,37 +82,44 @@ const Quiz = () => {
     document.getElementById("quizApp").scrollIntoView();
   };
 
-
   const renderReview = () => {
     const score = calculateScore();
     return (
       <>
-      <div className="results-container">
-        <h2>Quiz Completed!</h2>
-        <h3>
-          Your Score: {score} out of {questions.length}
-        </h3>
-        <h3>Review Answers:</h3>
-        {questions.map((question) => (
-          <Fade triggerOnce="true">
-            <div key={question.id}>
-              <hr />
-              <p className="question-name">
-                <strong>Question:</strong> {question.question}
-              </p>
-              <p className="your-answer" style={{color: userAnswers[question.id] === question.correctAnswer ? '#90d101' : '#fa1357'}}>
-                <strong>Your Answer:</strong> {userAnswers[question.id]}
-              </p>
-              <p className="correct-answer">
-                <strong>Correct Answer:</strong> {question.correctAnswer}
-              </p>
-            </div>
-          </Fade>
-        ))}
-        <hr />
-        <button onClick={handleRestartQuiz}>Restart Quiz</button>
-      </div>
-    </>
+        <div className="results-container">
+          <h2>Quiz Completed!</h2>
+          <h3>
+            Your Score: {score} out of {questions.length}
+          </h3>
+          <h3>Review Answers:</h3>
+          {questions.map((question) => (
+            <Fade triggerOnce="true">
+              <div key={question.id}>
+                <hr />
+                <p className="question-name">
+                  <strong>Question:</strong> {question.question}
+                </p>
+                <p
+                  className="your-answer"
+                  style={{
+                    color:
+                      userAnswers[question.id] === question.correctAnswer
+                        ? "#90d101"
+                        : "#fa1357",
+                  }}
+                >
+                  <strong>Your Answer:</strong> {userAnswers[question.id]}
+                </p>
+                <p className="correct-answer">
+                  <strong>Correct Answer:</strong> {question.correctAnswer}
+                </p>
+              </div>
+            </Fade>
+          ))}
+          <hr />
+          <button onClick={handleRestartQuiz}>Restart Quiz</button>
+        </div>
+      </>
     );
   };
 
@@ -113,13 +127,11 @@ const Quiz = () => {
     return questions.map((question) => (
       <Fade triggerOnce="true">
         <Question
-          key={question.id}
-          question={question.question}
-          answers={question.answers}
-          userAnswer={userAnswers[question.id] || ""}
-          onAnswerSelect={(selectedAnswer) =>
-            handleAnswerSelect(question.id, selectedAnswer)
-          }
+        key={question.id}
+        question={question.question}
+        answers={question.answers}
+        userAnswer={userAnswers[question.id] || ""}
+        onAnswerSelect={(selectedAnswer) => handleAnswerSelect(question.id, selectedAnswer)}
         />
       </Fade>
     ));
@@ -127,12 +139,16 @@ const Quiz = () => {
 
   return (
     <div className="quiz-app-container">
-      <button id="sound-button" onClick={playing ? pause : play}><img src={soundIcon}></img></button>
-      <Bounce triggerOnce="true"><h1 id="quizApp">Quiz App</h1></Bounce>
+      <button id="sound-button" onClick={playing ? pause : play}>
+        <img src={soundIcon}></img>
+      </button>
+      <Bounce triggerOnce="true">
+        <h1 id="quizApp">Quiz App</h1>
+      </Bounce>
       {!completed ? (
         <div className="quiz-app">
           {renderQuestions()}
-          <button onClick={handleFinishQuiz}>Finish Quiz</button>
+          <button onClick={handleFinishQuiz} >Finish Quiz</button>
         </div>
       ) : (
         renderReview()
