@@ -26,11 +26,11 @@
 // export default Question;
 const Question = ({ question, answers, userAnswer, onAnswerSelect }) => {
   return (
-    <div>
+    <div className="question-container">
       <h3>{question}</h3>
       <form>
         {answers.map((answer, index) => (
-          <div key={index}>
+          <div key={index} className="question">
             <label>
               <input
                 type="radio"
