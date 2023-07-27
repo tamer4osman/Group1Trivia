@@ -63,11 +63,13 @@ const Quiz = () => {
 
   const handleFinishQuiz = () => {
     setCompleted(true);
+    document.getElementById("quizApp").scrollIntoView();
   };
 
   const handleRestartQuiz = () => {
     setUserAnswers({});
     setCompleted(false);
+    document.getElementById("quizApp").scrollIntoView();
   };
 
   const renderReview = () => {
@@ -118,7 +120,7 @@ const Quiz = () => {
   return (
     <div className="quiz-app-container">
       <button id="sound-button" onClick={playing ? pause : play}><img src={soundIcon}></img></button>
-      <h1>Quiz App</h1>
+      <h1 id="quizApp">Quiz App</h1>
       {!completed ? (
         <div className="quiz-app">
           {renderQuestions()}

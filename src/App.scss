@@ -153,6 +153,15 @@ input {
   margin-bottom: 4em;
 }
 
+input[type=radio] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 16px;
+  height: 16px;
+  outline: none;
+}git 
+
 /*-------------- Results ----------------- */
 
 .question-name {
