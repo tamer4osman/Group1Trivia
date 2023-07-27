@@ -15,7 +15,7 @@ $small: 'DotGothic16', sans-serif;
   max-width: 1280px;
   padding: 2rem;
   text-align: center;
-  color: $white;
+  // color: $white;
   margin-left: auto;
   margin-right: auto;
   font-family: $medium;
@@ -56,8 +56,10 @@ hr {
 h1 {
   text-transform: uppercase;
   text-shadow: 5px 5px $purple;
-  font-size: 5em;
+  font-size: 6em;
   font-family: $big;
+  margin-bottom: 1.5em;
+  margin-top: 1.5em;
 }
 
 button { 
@@ -102,7 +104,8 @@ button:hover {
 .quiz-app {
   z-index: 2;
 }
-/*-------------- Question ----------------- */
+
+/*-------- Question ----------------- */
 
 label {
   cursor: url(../hand-pointer.png), pointer;
@@ -160,7 +163,7 @@ input[type=radio] {
   width: 16px;
   height: 16px;
   outline: none;
-}git 
+}
 
 /*-------------- Results ----------------- */
 

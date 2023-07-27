@@ -4,6 +4,9 @@ import Question from "./Question";
 import axios from 'axios'
 import music from "/music.mp3"
 import soundIcon from '/sound.png'
+import { Fade } from "react-awesome-reveal";
+import { Bounce } from "react-awesome-reveal";
+
 
 
 
@@ -72,6 +75,7 @@ const Quiz = () => {
     document.getElementById("quizApp").scrollIntoView();
   };
 
+
   const renderReview = () => {
     const score = calculateScore();
     return (
@@ -83,18 +87,20 @@ const Quiz = () => {
         </h3>
         <h3>Review Answers:</h3>
         {questions.map((question) => (
-          <div key={question.id}>
-            <hr />
-            <p className="question-name">
-              <strong>Question:</strong> {question.question}
-            </p>
-            <p className="your-answer" style={{color: userAnswers[question.id] === question.correctAnswer ? '#90d101' : '#fa1357'}}>
-              <strong>Your Answer:</strong> {userAnswers[question.id]}
-            </p>
-            <p className="correct-answer">
-              <strong>Correct Answer:</strong> {question.correctAnswer}
-            </p>
-          </div>
+          <Fade triggerOnce="true">
+            <div key={question.id}>
+              <hr />
+              <p className="question-name">
+                <strong>Question:</strong> {question.question}
+              </p>
+              <p className="your-answer" style={{color: userAnswers[question.id] === question.correctAnswer ? '#90d101' : '#fa1357'}}>
+                <strong>Your Answer:</strong> {userAnswers[question.id]}
+              </p>
+              <p className="correct-answer">
+                <strong>Correct Answer:</strong> {question.correctAnswer}
+              </p>
+            </div>
+          </Fade>
         ))}
         <hr />
         <button onClick={handleRestartQuiz}>Restart Quiz</button>
@@ -105,22 +111,24 @@ const Quiz = () => {
 
   const renderQuestions = () => {
     return questions.map((question) => (
-      <Question
-        key={question.id}
-        question={question.question}
-        answers={question.answers}
-        userAnswer={userAnswers[question.id] || ""}
-        onAnswerSelect={(selectedAnswer) =>
-          handleAnswerSelect(question.id, selectedAnswer)
-        }
-      />
+      <Fade triggerOnce="true">
+        <Question
+          key={question.id}
+          question={question.question}
+          answers={question.answers}
+          userAnswer={userAnswers[question.id] || ""}
+          onAnswerSelect={(selectedAnswer) =>
+            handleAnswerSelect(question.id, selectedAnswer)
+          }
+        />
+      </Fade>
     ));
   };
 
   return (
     <div className="quiz-app-container">
       <button id="sound-button" onClick={playing ? pause : play}><img src={soundIcon}></img></button>
-      <h1 id="quizApp">Quiz App</h1>
+      <Bounce triggerOnce="true"><h1 id="quizApp">Quiz App</h1></Bounce>
       {!completed ? (
         <div className="quiz-app">
           {renderQuestions()}
