@@ -1,0 +1,235 @@
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Silkscreen:wght@400;700&family=VT323&display=swap');
+@import "node_modules/pixel-borders/src/styles/pixel-borders.scss";
+
+$purple: #a22c9e;
+$blue: #0795d3;
+$green: #90d101;
+$white: #fff;
+
+$big: 'Silkscreen', cursive;
+$medium: 'VT323', monospace;
+$small: 'DotGothic16', sans-serif;
+
+
+#root {
+  max-width: 1280px;
+  padding: 2rem;
+  text-align: center;
+  // color: $white;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: $medium;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  // min-width: 320px;
+  // min-height: 100vh;
+  background-color: #180a25;
+  cursor: url('../cursor.png'), auto;
+}
+
+.particles {
+  // position: fixed;
+  width: 100vw;
+  z-index: -1;  
+}
+
+#tsparticles {
+  z-index: -1;
+}
+
+li {
+  list-style-type: none;
+}
+
+hr {
+  border: 1px solid $purple;
+}
+
+h1 {
+  text-transform: uppercase;
+  text-shadow: 5px 5px $purple;
+  font-size: 6em;
+  font-family: $big;
+  margin-bottom: 1.5em;
+  margin-top: 1.5em;
+}
+
+button { 
+  padding: 1em;
+  font-size: 1.7em;
+  color: $green;
+  font-family: inherit;
+  text-transform: uppercase;
+  margin-top: 4em;
+  margin-bottom: 2em;
+  background-color: transparent;
+  z-index: 2;
+  transition: background-color 0.5s;
+  @include pixel-borders(
+    $corner-size: 2,
+    $border-size: 4px,
+    $border-color: $green)
+}
+
+#sound-button {
+  background-color: #fff;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  @include pixel-borders(
+    $corner-size: 2,
+    $border-size: 4px,
+    $border-color: #fff)
+}
+
+button:hover {
+  cursor: url(../hand-pointer.png), pointer;
+  background-color: $green;
+  color: $blue;
+}
+
+.quiz-app-container {
+  z-index: 2;
+  position:relative;
+}
+.quiz-app {
+  z-index: 2;
+}
+
+/*-------- Question ----------------- */
+
+label {
+  cursor: url(../hand-pointer.png), pointer;
+  padding: 1em 1.5em 1em 0.5em;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 1.5em;
+  white-space: nowrap;
+  color: $green;
+  @include pixel-borders(
+  $corner-size: 2,
+  $border-size: 4px,
+  $border-color: $purple);
+  transition: background-color 0.5s;
+}
+
+label:hover {
+  background-color: $purple;
+}
+
+label:has(> input:checked) { 
+  background-color: $purple;
+}
+
+.question-container h3 {
+  color:#0795d3;
+  font-size: 3em;
+  text-transform: uppercase;
+}
+
+.question-container {
+  z-index: 2;
+}
+
+input {
+  visibility: hidden;
+}
+
+.question-container form {
+  display: flex;
+  gap: 2em;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  // flex-wrap: nowrap;
+}
+.question {
+  margin-bottom: 4em;
+}
+
+input[type=radio] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 16px;
+  height: 16px;
+  outline: none;
+}
+
+/*-------------- Results ----------------- */
+
+.question-name {
+  color: $blue;
+}
+
+.results-container h1, h2 {
+  text-transform: uppercase;
+}
+
+.results-container h2 {
+  color:#fff;
+  text-transform: uppercase;
+}
+
+.results-container h3 {
+  text-transform: uppercase;
+  font-size: 2em;
+  color: $blue;
+}
+
+.results-container .question-name {
+  text-transform: uppercase;
+  font-size: 2.5em;
+  font-family: $medium;
+}
+
+.correct-answer {
+  color: $green;
+}
+
+.your-answer,
+.correct-answer {
+  font-size: 1.7em;
+}
+
+@media only screen and (max-width: 1289px) {
+  .question-container form {
+    flex-direction: column ;
+    gap: 0.5em;
+  }
+  input {
+    visibility: visible;
+  }
+  label {
+    border: none;
+    background-color: none;
+  }
+  label:hover {
+    color:$purple;  
+    background-color: #180a25;
+  }
+  label:has(> input:checked) { 
+    background-color: #180a25;
+    color: $purple;
+  }
+
+}
+
+@media only screen and (max-width: 768px) {
+  .question-container h3 {
+    font-size: 2em;
+  }
+  .results-container h3 {
+    font-size: 2em;
+  }
+
+}
