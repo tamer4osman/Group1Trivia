@@ -8,11 +8,12 @@ const Question = ({ question, answers, userAnswer, onAnswerSelect }) => {
             <label>
               <input
                 type="radio"
-                name={`question_${question.id}`}
+                // name={`question_${question.id}`}
+                name="question"
                 value={answer}
                 onChange={() => onAnswerSelect(answer)}
                 checked={userAnswer === answer}
-                disabled={userAnswer !== ""}
+                // disabled={userAnswer !== ""}
               />
               {answer}
             </label>
